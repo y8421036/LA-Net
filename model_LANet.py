@@ -27,10 +27,10 @@ class UNet(nn.Module):
         self.up4 = Up(channels)
         self.outc = OutConv2d(channels, n_classes)
         
-        self.rba1 = ReverseBoundaryAttention(channels)
-        self.rba2 = ReverseBoundaryAttention(channels)
-        self.rba3 = ReverseBoundaryAttention(channels)
-        self.rba4 = ReverseBoundaryAttention(channels)
+        self.re1 = ReverseEdge(channels)
+        self.re2 = ReverseEdge(channels)
+        self.re3 = ReverseEdge(channels)
+        self.re4 = ReverseEdge(channels)
         self.down = nn.MaxPool2d(2)
         self.dConv1 = DoubleConv(channels,channels)
         self.dConv2 = DoubleConv(channels,channels)
@@ -41,16 +41,16 @@ class UNet(nn.Module):
         enc1 = self.dConv1(x)
         down1 = self.down(enc1)
         enc2 = self.dConv2(down1)
-        x1 = self.rba1(enc2, enc1)
+        x1 = self.re1(enc2, enc1)
         down2 = self.down(enc2)           
         enc3 = self.dConv3(down2)
-        x2 = self.rba2(enc3, enc2)
+        x2 = self.re2(enc3, enc2)
         down3 = self.down(enc3)
         enc4 = self.dConv4(down3)
-        x3 = self.rba3(enc4, enc3)
+        x3 = self.re3(enc4, enc3)
         down4 = self.down(enc4)
         enc5 = self.dConv5(down4)
-        x4 = self.rba4(enc5, enc4)
+        x4 = self.re4(enc5, enc4)
         x = self.up1(enc5, x4)
 
         x = self.up2(x, x3)
@@ -58,7 +58,7 @@ class UNet(nn.Module):
         feature = self.up4(x, x1)
         x = self.outc(feature)
         return x,feature
-        # return x,feature,x1  # 用于可视化RBA的特征
+        
 
 
 class UNet_3Plus(nn.Module):
@@ -126,10 +126,13 @@ class UNet_3Plus(nn.Module):
 
     def forward(self, inputs):
         h1 = self.conv1(inputs)
+
         h2 = self.maxpool1(h1)
         h2 = self.conv2(h2)
+
         h3 = self.maxpool2(h2)
-        h3 = self.conv3(h3)
+        h3 = self.conv3(h3)  
+
 
         h1_PT_hd3 = self.h1_PT_hd3_relu(self.h1_PT_hd3_conv(self.h1_PT_hd3(h1)))
         h2_PT_hd3 = self.h2_PT_hd3_relu(self.h2_PT_hd3_conv(self.h2_PT_hd3(h2)))
@@ -173,15 +176,11 @@ class LA_Net(nn.Module):
         x = self.UP2(x)
         x = self.ALAP3(x)
         x = self.UP3(x)
-        # x_2D = x  #用于可视化3D路径投影后的2D特征图
         x = self.input2d(x0,x)
         x,feature = self.pp(x)
-        # x,feature,skip1 = self.pp(x) # 用于可视化RBA的特征
 
         x=torch.unsqueeze(x,2)
         return x,feature
-        # return x,feature,x_2D    #x_2D用于可视化3D路径投影后的2D特征图
-        # return x,feature,skip1 # 用于可视化RBA的特征
 
 
 class MutiScaleLayerAttention(nn.Module):
@@ -195,7 +194,7 @@ class MutiScaleLayerAttention(nn.Module):
         self.planePooling = nn.AdaptiveAvgPool3d((depth_size, 1, 1))
         self.conv2 = nn.Conv3d(channels, channels, kernel_size=1)
         self.relu = nn.ReLU(inplace=True)
-        self.gn = nn.GroupNorm(num_groups=32,num_channels=channels)  # group数为自设值
+        self.gn = nn.GroupNorm(num_groups=32,num_channels=channels) 
     def forward(self, x):
         x1 = self.relu(self.gn(self.convR0(x)))
         x2 = self.relu(self.gn(self.convR1(x)))
@@ -216,7 +215,7 @@ class UndirectionalPooling(nn.Module):
     def forward(self, x):
         return self.undirectionPooling(x)
     
-class ReverseBoundaryAttention(nn.Module):
+class ReverseEdge(nn.Module):
     def __init__(self, channels):
         super().__init__()
         self.channels = channels
@@ -243,9 +242,6 @@ class DetailFusion(nn.Module):
         self.conv1 = nn.Conv3d(in_channels, 1, 1)
 
     def forward(self, x, x1):
-        """
-        x是3D特征，x1是2D特征
-        """
         x0 = self.conv1(x)
         ave = self.avgPooling(x)
         max = self.maxPooling(x)
@@ -277,7 +273,7 @@ class skip(nn.Module):
     def forward(self, x0, x):
         x1 = self.skip_conv(x0)
         x = torch.cat([x1, x], dim=1)
-        x = torch.squeeze(x, 2)  # bczyx(z=1) -> bcyx  
+        x = torch.squeeze(x, 2)
         return self.double2dconv(x)
     
 
@@ -339,6 +335,7 @@ class Down(nn.Module):
         )
     def forward(self, x):
         return self.maxpool_conv(x)
+    
 
 class Up(nn.Module):
     def __init__(self, channels,  bilinear=True):
@@ -346,7 +343,7 @@ class Up(nn.Module):
         if bilinear:
             self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         else:
-            self.up = nn.ConvTranspose2d(channels // 2, channels // 2, kernel_size=2, stride=2)  #cyr6e# channels ?
+            self.up = nn.ConvTranspose2d(channels // 2, channels // 2, kernel_size=2, stride=2)  
         self.conv = DoubleConv(channels*2,channels)
     def forward(self, x1, x2):
         x1 = self.up(x1)
