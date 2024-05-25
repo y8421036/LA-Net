@@ -17,6 +17,6 @@ The implementation of this paper is based on PyTorch and verified under OCTA-500
 
 First, train LA-Net using train.py, and the top 3 results will be saved in the logs/best_model directory.  <br />
 Then, use test.py to test and generate the features of the last layer of LA-Net.  <br />
- &emsp;  &emsp; Note: the test.py file includes the npy parameter. When npy=1, it means generating features for training LA-Net+. When npy=2, it means generating the segmentation results for LA-Net.
+ &emsp;  &emsp; Note: the test.py file includes the npy parameter. When npy=1, it means generating features for training LA-Net+. When npy=2, it means generating the segmentation results for LA-Net.  <br />
 Next, train LA-Net+ using train+.py. <br />
 Finally, test LA-Net+ using test+.py. <br />
