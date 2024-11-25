@@ -12,7 +12,7 @@ torch=2.0.1+cu117
 ## Data Preparation
 * This paper is verified on the public OCTA-500 dataset.
 * The OCTA-500 in the dataset download page provided in the paper has been updated by the data provider, that is, upgraded from two foregrounds (RV,FAZ) to four foregrounds (capillary,artery,vein,FAZ).
-* To make it easier for you to reproduce LA-Net, I uploaded the image and label in previous dataset version. In addition, you can also use the new version of OCTA-500. However, when using the new version, you should be aware that you cannot directly use the labeling part of the preprocessing code provided in this repository. If you use the new version, you can determine whether your labeling processing is correct by taking the maximum projection of the OCTA volume data in the axial direction and checking whether the project image matches the new label.
+* To make it easier for you to reproduce LA-Net, I uploaded the image and label in previous dataset version to the network disk. In addition, you can also use the new version of OCTA-500. However, when using the new version, you should be aware that you cannot directly use the labeling part of the preprocessing code provided in this repository. You can determine whether your labeling processing is correct by taking the maximum projection of the OCTA volume data in the axial direction and checking whether the project image matches the new label.
 
 ### Dataset Download Link
 OCTA-500(RV&FAZ): [https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi](https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi) 
@@ -20,26 +20,26 @@ OCTA-500(RV&FAZ): [https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi](htt
 Extraction code: mavi
 
 ### File tree of the dataset
-datasets
-└── OCTA-500
-    ├── 3M
-    │   ├── OCT
-    │   │   ├── ...
-    │   ├── OCTA
-    │   │   ├── ...
-    │   ├── Label_RV
-    │   │   ├── ...
-    │   └── GroundTruth
-    │       ├── ...
-    └── 6M
-        ├── OCT
-        │   ├── ...
-        ├── OCTA
-        │   ├── ...
-        ├── Label_RV
-        │   ├── ...
-        └── GroundTruth
-            ├── ...
+datasets <br />
+└── OCTA-500 <br />
+    ├── 3M <br />
+    │   ├── OCT <br />
+    │   │   ├── ... <br />
+    │   ├── OCTA <br />
+    │   │   ├── ... <br />
+    │   ├── Label_RV <br />
+    │   │   ├── ... <br />
+    │   └── GroundTruth <br />
+    │       ├── ... <br />
+    └── 6M <br />
+        ├── OCT <br />
+        │   ├── ... <br />
+        ├── OCTA <br />
+        │   ├── ... <br />
+        ├── Label_RV <br />
+        │   ├── ... <br />
+        └── GroundTruth <br />
+            ├── ... <br />
 
 			
 ## Usage
