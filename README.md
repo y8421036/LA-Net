@@ -20,26 +20,26 @@ OCTA-500(RV&FAZ): [https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi](htt
 Extraction code: mavi
 
 ### File tree of the dataset
-datasets <br />
-└── OCTA-500 <br />
-    ├── 3M <br />
-    │   ├── OCT <br />
-    │   │   ├── ... <br />
-    │   ├── OCTA <br />
-    │   │   ├── ... <br />
-    │   ├── Label_RV <br />
-    │   │   ├── ... <br />
-    │   └── GroundTruth <br />
-    │       ├── ... <br />
-    └── 6M <br />
-        ├── OCT <br />
-        │   ├── ... <br />
-        ├── OCTA <br />
-        │   ├── ... <br />
-        ├── Label_RV <br />
-        │   ├── ... <br />
-        └── GroundTruth <br />
-            ├── ... <br />
+datasets 
+<br />└── OCTA-500 
+<br />    ├── 3M 
+<br />    │   ├── OCT 
+<br />    │   │   ├── ... 
+<br />    │   ├── OCTA 
+<br />    │   │   ├── ... 
+<br />    │   ├── Label_RV 
+<br />    │   │   ├── ... 
+<br />    │   └── GroundTruth 
+<br />    │       ├── ... 
+<br />    └── 6M
+<br />        ├── OCT 
+<br />        │   ├── ... 
+<br />        ├── OCTA 
+<br />        │   ├── ...
+<br />        ├── Label_RV 
+<br />        │   ├── ... 
+<br />        └── GroundTruth 
+<br />            ├── ... 
 
 			
 ## Usage
