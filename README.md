@@ -6,6 +6,7 @@ DOI： [10.1088/1361-6560/ad2011](https://iopscience.iop.org/article/10.1088/136
 
 ## Requirements
 python=3.8.0
+
 torch=2.0.1+cu117
 
 ## Data Preparation
@@ -15,6 +16,7 @@ torch=2.0.1+cu117
 
 ### Dataset Download Link
 OCTA-500(RV&FAZ): [https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi](https://pan.baidu.com/s/1nrfZt9zxmscL5ezgqhg5RQ?pwd=mavi) 
+
 Extraction code: mavi
 
 ### File tree of the dataset
