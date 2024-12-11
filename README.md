@@ -5,9 +5,9 @@ This work has been published at Physics in Medicine & Biology.
 DOI： [10.1088/1361-6560/ad2011](https://iopscience.iop.org/article/10.1088/1361-6560/ad2011)
 
 ## Requirements
-python=3.8.0
+python>=3.8.0
 
-torch=2.0.1+cu117
+torch>=2.0.1+cu117
 
 ## Data Preparation
 * This paper is verified on the public OCTA-500 dataset.
